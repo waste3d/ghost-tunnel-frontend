@@ -17,7 +17,7 @@ export const languages = {
       'nav.ghost': 'GHOST',
       'nav.tunnel': '{ TUNNEL }',
       'waitlist.title': 'Спасибо за ваш невероятный отклик на Ghost!',
-      'waitlist.subtitle': 'Ghost пользуется беспрецедентным спросом. Присоединяйтесь к нашему вейтлисту, и мы сообщим вам, как только доступ будет открыт.',
+      'waitlist.subtitle': 'Ghost пользуется беспрецедентным спросом. Доступ уже совсем скоро будет открыт. Следите за новостями, и мы сообщим вам о старте проекта.',
       'page.title': 'Waitlist Ghost Tunnel',
     },
   } as const;

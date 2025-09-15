@@ -1,4 +1,4 @@
---- 
+---
 import ComingSoon from '../../components/CommingSoon.vue';
 import { ui } from '../../i18n/ui';
 
@@ -27,33 +27,54 @@ const t = ui[lang];
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jura:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Скрипт для Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 
   <style is:global>
-    @keyframes move-stars { from { transform: translateY(0px); } to { transform: translateY(-2000px); } }
     @keyframes breathing-gradient { from { background-size: 100% 100%; } to { background-size: 130% 130%; } }
+    
     body {
-      color: #ffffff; font-family: 'Jura', sans-serif; margin: 0; overflow: hidden; 
-      min-height: 100vh; display: flex; flex-direction: column;
+      color: #ffffff; 
+      font-family: 'Jura', sans-serif; 
+      margin: 0; 
+      overflow: hidden; 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column;
       background-color: #111111;
       background-image: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.1), #111111 70%);
-      background-size: 100% 100%; background-position: center;
+      background-size: 100% 100%; 
+      background-position: center;
       animation: breathing-gradient 8s infinite alternate ease-in-out;
     }
-    .stars-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-    .stars, .stars2, .stars3 { position: absolute; top: 0; left: 0; width: 1px; height: 1px; background: transparent; }
-    .stars { animation: move-stars 150s linear infinite; filter: blur(0.5px); }
-    .stars2 { width: 2px; height: 2px; animation: move-stars 100s linear infinite; filter: blur(1px); }
-    .stars3 { width: 3px; height: 3px; animation: move-stars 50s linear infinite; filter: blur(1.5px); }
-    header, main { position: relative; z-index: 1; }
-    main { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+
+    #tsparticles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0; /* Размещаем фон позади всего контента */
+    }
+    
+    header, main, footer { 
+      position: relative; 
+      z-index: 1; /* Убедимся, что контент поверх фона */
+    }
+
+    main { 
+      flex-grow: 1; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
   </style>
 </head>
 <body>
-  <div class="stars-container">
-    <div class="stars" style="box-shadow: 792px 1819px #FFF, 1735px 648px #FFF, 158px 1030px #FFF, 1373px 1860px #FFF, 1968px 1076px #FFF, 1275px 109px #FFF, 804px 512px #FFF, 502px 1378px #FFF, 1726px 1638px #FFF, 1332px 1067px #FFF, 1228px 1198px #FFF, 1856px 1478px #FFF, 937px 111px #FFF, 129px 1238px #FFF, 1205px 1279px #FFF, 1799px 1157px #FFF, 188px 1884px #FFF, 1024px 1134px #FFF, 1836px 1603px #FFF, 62px 1106px #FFF, 818px 1585px #FFF, 504px 1723px #FFF, 1492px 1324px #FFF, 1210px 1854px #FFF, 1916px 1971px #FFF, 1395px 1126px #FFF;"></div>
-    <div class="stars2" style="box-shadow: 1737px 1561px #FFF, 1970px 1157px #FFF, 1083px 1019px #FFF, 1792px 338px #FFF, 1064px 843px #FFF, 1739px 1295px #FFF, 1474px 107px #FFF, 329px 61px #FFF, 1326px 398px #FFF, 1683px 1015px #FFF, 1404px 1982px #FFF, 1261px 1993px #FFF, 143px 1845px #FFF, 1181px 1930px #FFF, 185px 1986px #FFF, 1010px 1056px #FFF, 1431px 534px #FFF, 47px 1218px #FFF, 1515px 1236px #FFF;"></div>
-    <div class="stars3" style="box-shadow: 1017px 796px #FFF, 1630px 1472px #FFF, 853px 426px #FFF, 1331px 1121px #FFF, 1928px 1393px #FFF, 1146px 1301px #FFF, 513px 1445px #FFF, 1375px 1358px #FFF, 24px 842px #FFF, 1740px 1686px #FFF, 1762px 1113px #FFF, 542px 720px #FFF, 1104px 1605px #FFF, 1067px 1540px #FFF, 508px 590px #FFF;"></div>
-  </div>
+  
+  <!-- Контейнер для анимации частиц -->
+  <div id="tsparticles"></div>
 
   <header>
     <a href={`/${lang}/`} class="logo-container">
@@ -67,12 +88,83 @@ const t = ui[lang];
       <a href="/ru/" class:list={{ active: lang === 'ru' }}>RU</a>
     </div>
   </header>
+
   <main>
     <ComingSoon 
       title={t['waitlist.title']} 
       subtitle={t['waitlist.subtitle']} 
     />
   </main>
+  
+  <footer>
+    <div class="footer-content">
+      <p>Developed by <a href="https://github.com/waste3d" target="_blank" rel="noopener noreferrer">waste3d</a> w/ love</p>
+    </div>
+  </footer>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function () {
+      tsParticles.load("tsparticles", {
+        fpsLimit: 60,
+        particles: {
+          number: {
+            value: 60, // Было 80. Сделали поменьше.
+            density: {
+              enable: true,
+              value_area: 800
+            }
+          },
+          color: {
+            value: "#ffffff"
+          },
+          shape: {
+            type: "circle"
+          },
+          opacity: {
+            value: 0.3, // Было 0.5. Частицы стали намного прозрачнее.
+            random: true,
+          },
+          size: {
+            value: 1.7, // Было 2. Частицы стали меньше.
+            random: true,
+          },
+          links: {
+            enable: true,
+            distance: 150,
+            color: "#ffffff",
+            opacity: 0.1, // Было 0.1. Линии стали почти невидимыми.
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 0.4, // Немного замедлили движение.
+            direction: "none",
+            out_mode: "out",
+          }
+        },
+        interactivity: {
+          detectsOn: "canvas",
+          events: {
+            onHover: {
+              enable: true,
+              mode: "grab"
+            },
+            resize: true
+          },
+          modes: {
+            grab: {
+              distance: 140,
+              links: {
+                opacity: 0.1 // Эффект при наведении тоже сделали слабее.
+              }
+            }
+          }
+        },
+        detectRetina: true
+      });
+    });
+  </script>
+
 </body>
 </html>
 
@@ -86,12 +178,34 @@ const t = ui[lang];
     box-sizing: border-box;
   }
   .logo-container { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; }
-  .logo-image { height: 48px; width: auto; display: block; }
+  .logo-image { height: 68px; width: auto; display: block; }
   .logo-text { font-size: 1.125rem; font-weight: 700; color: #ffffff; text-transform: uppercase; }
-  .logo-tag { font-size: 1.125rem; font-weight: 700; color: #8B5CF6; }
+  .logo-tag { font-size: 1.125rem; font-weight: 700; color: #bd8dc9; }
 
   .lang-switcher { display: flex; gap: 0.5rem; align-items: center; }
   .lang-switcher a { color: #888; text-decoration: none; font-weight: 700; transition: color 0.2s; }
   .lang-switcher a:hover { color: #fff; }
-  .lang-switcher a.active { color: #8B5CF6; }
+  .lang-switcher a.active { color: #bd8dc9; }
+
+  footer {
+    padding: 2rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .footer-content {
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+  }
+
+  .footer-content a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-content a:hover {
+    color: #bd8dc9;
+  }
 </style>
