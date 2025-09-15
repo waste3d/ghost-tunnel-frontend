@@ -2,16 +2,17 @@
   "name": "my-astro-site",
   "type": "module",
   "version": "0.0.1",
-"scripts": {
-  "dev": "astro dev",
-  "start": "astro dev",
-  "build": "astro build",
-  "preview": "astro preview --host 0.0.0.0",
-  "astro": "astro"
-},
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "host dist",
+    "astro": "astro"
+  },
   "dependencies": {
     "@astrojs/vue": "^5.1.1",
     "astro": "^5.13.7",
+    "host": "^0.0.1",
     "vue": "^3.5.21"
   }
 }

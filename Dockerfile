@@ -1,34 +1,26 @@
-# --- ЭТАП 1: Установка зависимостей ---
-    FROM node:20-alpine AS deps
+# --- ЭТАП 1: Сборка проекта ---
+    FROM node:20-alpine AS builder
     WORKDIR /app
     COPY package*.json ./
     RUN npm install
-    
-    # --- ЭТАП 2: Сборка проекта ---
-    FROM node:20-alpine AS builder
-    WORKDIR /app
-    COPY --from=deps /app/node_modules ./node_modules
     COPY . .
     RUN npm run build
     
-    # --- ЭТАП 3: Финальный образ ---
-    FROM node:20-alpine AS runner
+    # --- ЭТАП 2: Финальный образ ---
+    FROM node:20-alpine
     WORKDIR /app
     
-    # Установка зависимостей, необходимых для запуска preview
+    # Копируем зависимости
     COPY package*.json ./
+    
+    # Устанавливаем ТОЛЬКО production-зависимости, включая наш новый 'host'
     RUN npm install --omit=dev
     
-    # ▼▼▼ ГЛАВНОЕ ИЗМЕНЕНИЕ ▼▼▼
-    # Копируем ИСХОДНЫЙ КОД, который нужен astro preview для построения маршрутов
-    COPY --from=builder /app/src ./src
-    
-    # Копируем остальные файлы, необходимые для запуска
+    # Копируем собранный сайт
     COPY --from=builder /app/dist ./dist
-    COPY --from=builder /app/public ./public
-    COPY --from=builder /app/astro.config.mjs ./
-    COPY --from=builder /app/package.json ./
-    COPY --from=builder /app/tsconfig.json ./
     
-    EXPOSE 4321
+    # EXPOSE больше не нужен для 'host', но можно оставить для информации
+    EXPOSE 3000
+    
+    # Запускаем наш новый, простой сервер
     CMD ["npm", "run", "preview"]
