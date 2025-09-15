@@ -5,7 +5,13 @@ export default defineConfig({
   integrations: [vue()],
   trailingSlash: 'always',
 
-  allowedHosts: ['gtunnel.ru', 'www.gtunnel.ru'],
+
+  vite: {
+    preview: {
+      allowedHosts: ['gtunnel.ru', 'www.gtunnel.ru'],
+    }
+  },  
+  
   i18n: {
     trailingSlash: 'always',
     defaultLocale: "en",
