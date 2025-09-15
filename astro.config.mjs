@@ -3,9 +3,9 @@ import vue from '@astrojs/vue';
 
 export default defineConfig({
   integrations: [vue()],
-  // ↓↓↓ ИЗМЕНЕНИЕ ЗДЕСЬ ↓↓↓
   trailingSlash: 'always',
 
+  allowedHosts: ['gtunnel.ru', 'www.gtunnel.ru'],
   i18n: {
     trailingSlash: 'always',
     defaultLocale: "en",
